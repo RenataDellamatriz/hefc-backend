@@ -11,7 +11,7 @@ export class Database extends AwilixResolver {
 
   async initConnection() {
     this.dataSource = new DataSource({
-      type: this.globalConfig.db.url.split(':')[0] as 'postgres',
+      type: 'postgres',
       url: this.globalConfig.db.url,
       logging: this.globalConfig.db.log,
       entities: [__dirname + '/entities/*.{js,ts}', __dirname + '/entities/**/*.{js,ts}'],
