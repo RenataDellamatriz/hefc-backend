@@ -1,0 +1,28 @@
+
+version: '3.7'
+services:
+  db:
+    container_name: db-hefc
+    image: postgres:12
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  backend:
+    container_name: backend-hefc
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      - DB_URL=postgres://postgres:password@db:5432/postgres
+volumes:
+  postgres: 
+  
+ 
