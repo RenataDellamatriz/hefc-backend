@@ -17,6 +17,9 @@ export class GlobalConfig extends AwilixResolver {
   };
   sentryDsn = '';
 
+  emailUser = '';
+  emailPass = '';
+
   constructor() {
     super();
     this.load();

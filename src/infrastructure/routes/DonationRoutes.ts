@@ -17,7 +17,7 @@ export default class DonationRoutes implements Routes {
         '/donation',
         {
           schema: this.addDonationController.validateSchema(),
-          preValidation: this.authMiddleware.authenticate(),
+          preValidation: [this.authMiddleware.authenticate({ jwt: true })],
         },
         this.addDonationController.handle.bind(this.addDonationController),
       )
@@ -25,7 +25,7 @@ export default class DonationRoutes implements Routes {
         '/donation',
         {
           schema: this.getDonationController.validateSchema(),
-          preValidation: this.authMiddleware.authenticate(),
+          preValidation: [this.authMiddleware.authenticate({ jwt: true })],
         },
         this.getDonationController.handle.bind(this.getDonationController),
       );

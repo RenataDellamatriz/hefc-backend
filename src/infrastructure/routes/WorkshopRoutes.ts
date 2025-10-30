@@ -17,7 +17,7 @@ export default class WorkshopRoutes implements Routes {
         '/workshop',
         {
           schema: this.addWorkshopController.validateSchema(),
-          preValidation: this.authMiddleware.authenticate(),
+          preValidation: [this.authMiddleware.authenticate({ jwt: true })],
         },
         this.addWorkshopController.handle.bind(this.addWorkshopController),
       )
@@ -25,7 +25,7 @@ export default class WorkshopRoutes implements Routes {
         '/workshop',
         {
           schema: this.getWorkshopController.validateSchema(),
-          preValidation: this.authMiddleware.authenticate(),
+          preValidation: [this.authMiddleware.authenticate({ jwt: true })],
         },
         this.getWorkshopController.handle.bind(this.getWorkshopController),
       );

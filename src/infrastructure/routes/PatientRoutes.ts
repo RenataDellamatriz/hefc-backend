@@ -17,7 +17,7 @@ export default class PatientRoutes implements Routes {
         '/patient',
         {
           schema: this.addPatientController.validateSchema(),
-          preValidation: this.authMiddleware.authenticate(),
+          preValidation: [this.authMiddleware.authenticate({ jwt: true })],
         },
         this.addPatientController.handle.bind(this.addPatientController),
       )
@@ -25,7 +25,7 @@ export default class PatientRoutes implements Routes {
         '/patient',
         {
           schema: this.getPatientController.validateSchema(),
-          preValidation: this.authMiddleware.authenticate(),
+          preValidation: [this.authMiddleware.authenticate({ jwt: true })],
         },
         this.getPatientController.handle.bind(this.getPatientController),
       );

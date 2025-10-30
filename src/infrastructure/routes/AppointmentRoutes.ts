@@ -17,7 +17,7 @@ export default class AppointmentRoutes implements Routes {
         '/appointment',
         {
           schema: this.addAppointmentController.validateSchema(),
-          preValidation: this.authMiddleware.authenticate(),
+          preValidation: [this.authMiddleware.authenticate({ jwt: true })],
         },
         this.addAppointmentController.handle.bind(this.addAppointmentController),
       )
@@ -25,7 +25,7 @@ export default class AppointmentRoutes implements Routes {
         '/appointment',
         {
           schema: this.getAppointmentController.validateSchema(),
-          preValidation: this.authMiddleware.authenticate(),
+          preValidation: [this.authMiddleware.authenticate({ jwt: true })],
         },
         this.getAppointmentController.handle.bind(this.getAppointmentController),
       );

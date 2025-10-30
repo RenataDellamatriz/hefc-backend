@@ -23,6 +23,8 @@ import { AppointmentRepository } from './repositories/AppointmentRepository';
 import AppointmentRoutes from './routes/AppointmentRoutes';
 import { LoanRepository } from './repositories/LoanRepository';
 import LoanRoutes from './routes/LoanRoutes';
+import { UserRepository } from './repositories/UserRepository';
+import UserRoutes from './routes/UserRoutes';
 
 export class Container {
   instance: AwilixContainer;
@@ -65,6 +67,7 @@ export class Container {
         donationRepository: asClass(DonationRepository).singleton(),
         appointmentRepository: asClass(AppointmentRepository).singleton(),
         loanRepository: asClass(LoanRepository).singleton(),
+        userRepository: asClass(UserRepository).singleton(),
       })
       .register({
         healthRoutes: asClass(HealthRoutes).singleton(),
@@ -73,6 +76,7 @@ export class Container {
         donationRoutes: asClass(DonationRoutes).singleton(),
         appointmentRoutes: asClass(AppointmentRoutes).singleton(),
         loanRoutes: asClass(LoanRoutes).singleton(),
+        userRoutes: asClass(UserRoutes).singleton(),
       })
       .loadModules(
         [

@@ -17,7 +17,7 @@ export default class LoanRoutes implements Routes {
         '/loan',
         {
           schema: this.addLoanController.validateSchema(),
-          preValidation: this.authMiddleware.authenticate(),
+          preValidation: [this.authMiddleware.authenticate({ jwt: true })],
         },
         this.addLoanController.handle.bind(this.addLoanController),
       )
@@ -25,7 +25,7 @@ export default class LoanRoutes implements Routes {
         '/loan',
         {
           schema: this.getLoanController.validateSchema(),
-          preValidation: this.authMiddleware.authenticate(),
+          preValidation: [this.authMiddleware.authenticate({ jwt: true })],
         },
         this.getLoanController.handle.bind(this.getLoanController),
       );

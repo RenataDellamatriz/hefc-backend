@@ -32,7 +32,6 @@ async function shutdown(container: Container) {
 async function start() {
   const container = new Container();
   await container.loadContainers();
-  // for (const r in container.instance.registrations) console.log(r);
   await initServer(container);
   await initServices(container);
 
