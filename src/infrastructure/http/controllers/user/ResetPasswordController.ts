@@ -36,7 +36,7 @@ export class ResetPasswordController extends Controller {
     const { body } = await this.validateInputs<null, null, BodyRequestParams>(req);
     const { newPassword } = body;
 
-    const userId = req.user['id'];
+    const userId = String((req.user as any)['id']);
 
     await this.resetPasswordAction.execute(userId, newPassword);
 

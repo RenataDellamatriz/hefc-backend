@@ -1,4 +1,4 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyRequest } from 'fastify';
 import { Controller } from '../Controller';
 import { GetUserAction } from '../../../../domain/user/GetUserAction';
 
@@ -16,11 +16,11 @@ export class GetUserController extends Controller {
           bearerToken: [],
         },
       ],
-    }
+    };
   }
 
   async handle(req: FastifyRequest) {
-    const userId = req.user['id'];
+    const userId = String((req.user as any)['id']);
     return await this.getUserAction.execute(userId);
   }
 }
