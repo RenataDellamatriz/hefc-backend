@@ -20,6 +20,8 @@ export class GlobalConfig extends AwilixResolver {
   emailUser = '';
   emailPass = '';
 
+  appUrl= '';
+
   constructor() {
     super();
     this.load();
@@ -51,5 +53,8 @@ export class GlobalConfig extends AwilixResolver {
     this.db.url = process.env.DB_URL;
     this.db.log = process.env.DB_LOG === "1" || process.env.DB_LOG === "true";  
     this.sentryDsn = process.env.SENTRY as string;  
+    this.emailUser = process.env.EMAIL_USER
+    this.emailPass = process.env.EMAIL_PASS
+    this.appUrl = process.env.APP_URL
   }
 }

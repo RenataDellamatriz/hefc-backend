@@ -2,7 +2,6 @@ import nodemailer from 'nodemailer';
 import { UserRepository } from '../repositories/UserRepository';
 import { GlobalConfig } from '../../application/config/globalConfig';
 
-
 export default class EmailService {
   constructor(private userRepository: UserRepository, private globalConfig: GlobalConfig) {}
 
@@ -16,8 +15,8 @@ export default class EmailService {
     },
   });
 
-  private async findUserById(userId: string) {
-    const user = await this.userRepository.getById(userId);
+  private async findUserByEmail(email: string) {
+    const user = await this.userRepository.getByEmail(email);
 
     if (!user) {
       throw new Error('User not found.');
@@ -34,8 +33,11 @@ export default class EmailService {
       html,
     };
 
+    console.log("mailOptions", mailOptions)
+
     try {
-      await this.transporter.sendMail(mailOptions);
+      const res = await this.transporter.sendMail(mailOptions);
+      console.log("res", res)
       console.log(`Email enviado para ${to}`);
     } catch (error) {
       console.error('Erro ao enviar email:', error);
@@ -43,8 +45,8 @@ export default class EmailService {
     }
   }
 
-  async sendResetPasswordEmail(userId: string, resetLink: string) {
-    const user = await this.findUserById(userId);
+  async sendResetPasswordEmail(email: string, resetLink: string) {
+    const user = await this.findUserByEmail(email);    
     const subject = 'Redefinir sua senha';
     const html = `
     <!DOCTYPE html>

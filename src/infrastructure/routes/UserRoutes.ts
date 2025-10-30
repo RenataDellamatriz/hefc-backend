@@ -6,6 +6,8 @@ import { GetAllUsersController } from '../http/controllers/user/GetAllUsersContr
 import { SignInController } from '../http/controllers/user/SignInController';
 import { DeleteUserController } from '../http/controllers/user/DeleteUserController';
 import { GetUserController } from '../http/controllers/user/GetUserController';
+import { ForgotPasswordController } from '../http/controllers/user/ForgotPasswordController';
+import { ResetPasswordController } from '../http/controllers/user/ResetPasswordController';
 
 export default class UserRoutes implements Routes {
   constructor(
@@ -15,6 +17,8 @@ export default class UserRoutes implements Routes {
     private getUserController: GetUserController,
     private signInController: SignInController,
     private deleteUserController: DeleteUserController,
+    private forgotPasswordController: ForgotPasswordController,
+    private resetPasswordController: ResetPasswordController
   ) {}
 
   routes(fastify: FastifyInstance) {
@@ -66,6 +70,22 @@ export default class UserRoutes implements Routes {
         ],
       },
       this.deleteUserController.handle.bind(this.deleteUserController),
+    );
+
+    fastify.post(
+      '/user/forgot-password',
+      {
+        schema: this.forgotPasswordController.validateSchema(),
+      },
+      this.forgotPasswordController.handle.bind(this.forgotPasswordController),
+    );
+    fastify.post(
+      '/user/reset-password',
+      {
+        schema: this.resetPasswordController.validateSchema(),
+        preValidation: this.authMiddleware.authenticate({ jwt: true }),
+      },
+      this.resetPasswordController.handle.bind(this.resetPasswordController),
     );
   }
 }

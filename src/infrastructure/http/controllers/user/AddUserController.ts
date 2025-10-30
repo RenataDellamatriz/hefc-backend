@@ -38,9 +38,8 @@ export class AddUserController extends Controller {
   }
 
   async handle(req: FastifyRequest) {
-    const { body } = await this.validateInputs<null, null, AddUserSchema>(req);
-    
-    // Hash da senha antes de salvar
+    const { body } = await this.validateInputs<null, null, AddUserSchema>(req);    
+  
     const hashedPassword = await bcrypt.hash(body.password, 10);
     
     return await this.addUserAction.execute({
