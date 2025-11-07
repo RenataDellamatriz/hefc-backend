@@ -4,14 +4,21 @@ import * as yup from 'yup';
 import { AddLoanAction } from '../../../../domain/loan/AddLoanAction';
 
 export const addLoanSchema = yup.object({
-  loanDate: yup.date().required('A data do empréstimo é obrigatória'),
-  returnDate: yup.date().required('A data do empréstimo é obrigatória'),
-  patientName: yup.string().required('O nome do paciente é obrigatório'),
-  equipment: yup.string().required('O equipamento é obrigatório'),
+  pacienteId: yup.number().required('ID do paciente é obrigatório'),
+  item: yup.string().required('Item é obrigatório'),
+  quantidade: yup.number().required('Quantidade é obrigatória'),
+  unidade: yup.string().required('Unidade é obrigatória'),
+  dataEmprestimo: yup.date().required('Data do empréstimo é obrigatória'),
+  dataDevolucaoPrevista: yup.date().required('Data de devolução prevista é obrigatória'),
+  declaracaoAssinada: yup.boolean().default(false),
+  loanDate: yup.date().optional(),
+  returnDate: yup.date().optional(),
+  patientName: yup.string().optional(),
+  equipment: yup.string().optional(),
   status: yup
-    .mixed<'active' | 'returned' | 'overdue'>()
-    .oneOf(['active', 'returned', 'overdue'], 'Status inválido')
-    .required('O status é obrigatório'),
+    .mixed<'pending' | 'returned'>()
+    .oneOf(['pending', 'returned'], 'Status inválido')
+    .optional(),
 });
 
 export type AddLoanSchema = yup.InferType<typeof addLoanSchema>;

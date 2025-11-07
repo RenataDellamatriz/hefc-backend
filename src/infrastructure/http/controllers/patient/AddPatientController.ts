@@ -9,6 +9,24 @@ const addPatientSchema = yup.object().shape({
   name: yup.string().required(),
   type: yup.string().required(),
   status: yup.string().required(),
+  nomeCompleto: yup.string().required(),
+  dataNascimento: yup.date().required(),
+  cpf: yup.string().required(),
+  rg: yup.string().required(),
+  enderecoCompleto: yup.string().required(),
+  cep: yup.string().required(),
+  telefone: yup.string().required(),
+  estadoCivil: yup.string().required(),
+  nomeEsposa: yup.string().optional(),
+  filhos: yup
+    .array()
+    .of(
+      yup.object().shape({
+        nome: yup.string().required(),
+        idade: yup.number().required(),
+      }),
+    )
+    .optional(),
 });
 
 export class AddPatientController extends Controller {

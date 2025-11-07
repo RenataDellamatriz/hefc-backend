@@ -25,6 +25,7 @@ import { LoanRepository } from './repositories/LoanRepository';
 import LoanRoutes from './routes/LoanRoutes';
 import { UserRepository } from './repositories/UserRepository';
 import UserRoutes from './routes/UserRoutes';
+import ReportRoutes from './routes/ReportRoutes';
 
 export class Container {
   instance: AwilixContainer;
@@ -77,6 +78,7 @@ export class Container {
         appointmentRoutes: asClass(AppointmentRoutes).singleton(),
         loanRoutes: asClass(LoanRoutes).singleton(),
         userRoutes: asClass(UserRoutes).singleton(),
+        reportRoutes: asClass(ReportRoutes).singleton(),
       })
       .loadModules(
         [

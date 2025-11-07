@@ -1,4 +1,11 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+} from 'typeorm';
+import { Patient } from './Patient';
 
 export enum WorkshopStatus {
   ACTIVE = 'active',
@@ -14,17 +21,20 @@ export class Workshop {
   @Column()
   name: string;
 
-  @Column()
-  weekday: string;
+  @Column({ type: 'text', nullable: true })
+  descricao?: string;
 
-  @Column()
-  startTime: string;
+  @Column({ name: 'dia_semana', nullable: true })
+  diaSemana?: string;
 
-  @Column()
-  endTime: string;
+  @Column({ name: 'horario_inicio', nullable: true })
+  horarioInicio?: string;
 
-  @Column({ type: 'int' })
-  participants: number;
+  @Column({ name: 'horario_fim', nullable: true })
+  horarioFim?: string;
+
+  @ManyToMany(() => Patient, (patient) => patient.oficinas)
+  participantes: Patient[];
 
   @Column({
     type: 'enum',
@@ -32,6 +42,18 @@ export class Workshop {
     default: WorkshopStatus.ACTIVE,
   })
   status: WorkshopStatus;
+
+  @Column({ name: 'weekday', nullable: true })
+  weekday?: string;
+
+  @Column({ name: 'start_time', nullable: true })
+  startTime?: string;
+
+  @Column({ name: 'end_time', nullable: true })
+  endTime?: string;
+
+  @Column({ type: 'int', nullable: true })
+  participants?: number;
 
   @CreateDateColumn()
   createdAt?: Date;

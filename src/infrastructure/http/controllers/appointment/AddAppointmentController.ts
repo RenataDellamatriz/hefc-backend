@@ -4,16 +4,18 @@ import * as yup from 'yup';
 import { AddAppointmentAction } from '../../../../domain/appointment/AddAppointmentAction';
 
 export const addAppointmentSchema = yup.object({
-  appointmentDate: yup.date().required('Data do atendimento é obrigatória'),
-  patientName: yup.string().trim().required('Nome do paciente é obrigatório'),
-  type: yup
-    .string()
-    .oneOf(['cancer', 'family', 'other'], 'Tipo inválido')
-    .required('Tipo é obrigatório'),
+  pacienteId: yup.number().required('ID do paciente é obrigatório'),
+  data: yup.date().required('Data do atendimento é obrigatória'),
+  profissional: yup.string().required('Profissional é obrigatório'),
+  especialidade: yup.string().required('Especialidade é obrigatória'),
+  observacoes: yup.string().optional(),
+  appointmentDate: yup.date().optional(),
+  patientName: yup.string().trim().optional(),
+  type: yup.string().oneOf(['cancer', 'family', 'other'], 'Tipo inválido').optional(),
   status: yup
     .string()
     .oneOf(['ongoing', 'completed'], 'Status inválido')
-    .required('Status é obrigatório'),
+    .optional(),
 });
 
 export type AddAppointmentSchema = yup.InferType<typeof addAppointmentSchema>;

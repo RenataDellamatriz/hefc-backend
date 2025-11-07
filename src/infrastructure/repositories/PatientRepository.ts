@@ -8,12 +8,24 @@ export class PatientRepository extends Repository {
     super();
   }
 
-  async getById(userId: string) {
-    return await this.db.getEntity(Patient).findOneBy({ userId });
+  async getById(id: string | number) {
+    const patientId = typeof id === 'string' ? parseInt(id, 10) : id;
+    return await this.db
+      .getEntity(Patient)
+      .findOne({
+        where: { id: patientId },
+        relations: ['atendimentos', 'emprestimos', 'doacoes', 'oficinas'],
+      });
   }
 
-  async getAll(condition: FindManyOptions<ObjectLiteral>) {
-    return this.db.getEntity(Patient).find({ order: { createdAt: 'DESC' }, ...condition });
+  async getAll(condition: FindManyOptions<ObjectLiteral> = {}) {
+    return this.db
+      .getEntity(Patient)
+      .find({
+        order: { createdAt: 'DESC' },
+        relations: ['atendimentos', 'emprestimos', 'doacoes', 'oficinas'],
+        ...condition,
+      });
   }
 
   async add(obj: ObjectLiteral) {

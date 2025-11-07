@@ -5,17 +5,18 @@ import { DonationStatus, DonationType } from '../../../database/entities/Donatio
 import { AddDonationAction } from '../../../../domain/donation/AddDonationAction';
 
 export const addDonationSchema = yup.object({
-  type: yup
-    .mixed<DonationType>()
-    .oneOf(Object.values(DonationType))
-    .required('Tipo de doação é obrigatório'),
-
-  amount: yup.string().required('Valor da doação é obrigatório'),
-
+  pacienteId: yup.number().required('ID do paciente é obrigatório'),
+  descricaoItem: yup.string().required('Descrição do item é obrigatória'),
+  quantidade: yup.number().required('Quantidade é obrigatória'),
+  unidade: yup.string().optional(),
+  valorEstimado: yup.string().optional(),
+  type: yup.mixed<DonationType>().oneOf(Object.values(DonationType)).optional(),
+  amount: yup.string().optional(),
   status: yup
     .mixed<DonationStatus>()
     .oneOf(Object.values(DonationStatus))
-    .default(DonationStatus.PENDING),
+    .default(DonationStatus.PENDING)
+    .optional(),
 });
 
 export type AddDonationSchema = yup.InferType<typeof addDonationSchema>;

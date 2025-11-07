@@ -23,12 +23,12 @@ export class GetPatientController extends Controller {
           bearerToken: [],
         },
       ],
-      params: getPatientSchema,
+      querystring: getPatientSchema,
     };
   }
 
   async handle(req: FastifyRequest) {
-    const { params } = await this.validateInputs<GetPatientSchema, null, null>(req);
-    return await this.getPatientAction.execute(params?.patientId);
+    const { query } = await this.validateInputs<null, GetPatientSchema, null>(req);
+    return await this.getPatientAction.execute(query?.patientId);
   }
 }

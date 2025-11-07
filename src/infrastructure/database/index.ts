@@ -15,6 +15,7 @@ export class Database extends AwilixResolver {
       url: this.globalConfig.db.url,
       logging: this.globalConfig.db.log,
       entities: [__dirname + '/entities/*.{js,ts}', __dirname + '/entities/**/*.{js,ts}'],
+      synchronize: true,
     });
     await this.dataSource.initialize();
     await this.dataSource.synchronize();
