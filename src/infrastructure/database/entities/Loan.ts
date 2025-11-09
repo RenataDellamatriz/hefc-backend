@@ -5,8 +5,10 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Patient } from './Patient';
+import { LoanContact } from './LoanContact';
 
 export type LoanStatus = 'pending' | 'returned' | 'overdue';
 
@@ -26,7 +28,7 @@ export class Loan {
   item?: string;
 
   @Column({ type: 'int', nullable: true })
-  quantity?: number;  
+  quantity?: number;
 
   @Column({ type: 'date', name: 'loan_date', nullable: true })
   loanDate?: Date;
@@ -48,4 +50,10 @@ export class Loan {
 
   @CreateDateColumn()
   createdAt?: Date;
+
+  @OneToMany(() => LoanContact, (contact) => contact.loan, {
+    cascade: true,
+    eager: true,
+  })
+  contacts: LoanContact[];
 }
