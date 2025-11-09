@@ -5,11 +5,11 @@ import { DonationStatus, DonationType } from '../../../database/entities/Donatio
 import { AddDonationAction } from '../../../../domain/donation/AddDonationAction';
 
 export const addDonationSchema = yup.object({
-  pacienteId: yup.number().required('ID do paciente é obrigatório'),
-  descricaoItem: yup.string().required('Descrição do item é obrigatória'),
-  quantidade: yup.number().required('Quantidade é obrigatória'),
-  unidade: yup.string().optional(),
-  valorEstimado: yup.string().optional(),
+  patientId: yup.number().required('Patient ID is required'),
+  itemDescription: yup.string().required('Item description is required'),
+  quantity: yup.number().required('Quantity is required'),
+  unit: yup.string().optional(),
+  estimatedValue: yup.string().optional(),
   type: yup.mixed<DonationType>().oneOf(Object.values(DonationType)).optional(),
   amount: yup.string().optional(),
   status: yup

@@ -6,7 +6,7 @@ import { GetWorkshopAction } from '../../../../domain/workshop/GetWorkshopAction
 export type GetWorkshopSchema = yup.InferType<typeof getWorkshopSchema>;
 
 const getWorkshopSchema = yup.object().shape({
-  patientId: yup.string(),
+  workshopId: yup.string(),
 });
 
 export class GetWorkshopController extends Controller {
@@ -29,6 +29,6 @@ export class GetWorkshopController extends Controller {
 
   async handle(req: FastifyRequest) {
     const { params } = await this.validateInputs<GetWorkshopSchema, null, null>(req);
-    return await this.getWorkshopAction.execute(params?.patientId);
+    return await this.getWorkshopAction.execute(params?.workshopId);
   }
 }

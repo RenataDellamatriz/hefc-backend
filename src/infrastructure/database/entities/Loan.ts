@@ -8,40 +8,31 @@ import {
 } from 'typeorm';
 import { Patient } from './Patient';
 
-export type LoanStatus = 'pending' | 'returned';
+export type LoanStatus = 'pending' | 'returned' | 'overdue';
 
 @Entity()
 export class Loan {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'int', name: 'paciente_id', nullable: true })
-  pacienteId?: number;
+  @Column({ type: 'int', name: 'patient_id', nullable: true })
+  patientId?: number;
 
-  @ManyToOne(() => Patient, (patient) => patient.emprestimos, { nullable: true })
-  @JoinColumn({ name: 'paciente_id' })
-  paciente?: Patient;
+  @ManyToOne(() => Patient, (patient) => patient.loans, { nullable: true })
+  @JoinColumn({ name: 'patient_id' })
+  patient?: Patient;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   item?: string;
 
   @Column({ type: 'int', nullable: true })
-  quantidade?: number;
+  quantity?: number;  
 
-  @Column({ type: 'varchar', length: 50, nullable: true })
-  unidade?: string;
-
-  @Column({ type: 'date', name: 'data_emprestimo', nullable: true })
-  dataEmprestimo?: Date;
-
-  @Column({ type: 'date', name: 'data_devolucao_prevista', nullable: true })
-  dataDevolucaoPrevista?: Date;
-
-  @Column({ type: 'boolean', name: 'declaracao_assinada', default: false })
-  declaracaoAssinada: boolean;
-
-  @Column({ type: 'timestamp', nullable: true, name: 'loan_date' })
+  @Column({ type: 'date', name: 'loan_date', nullable: true })
   loanDate?: Date;
+
+  @Column({ type: 'boolean', name: 'signed_declaration', default: false })
+  signedDeclaration: boolean;
 
   @Column({ type: 'timestamp', nullable: true, name: 'return_date' })
   returnDate?: Date;

@@ -4,8 +4,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
-  ManyToMany,
-  JoinTable,
+  ManyToMany, 
 } from 'typeorm';
 import { Appointment } from './Appointment';
 import { Loan } from './Loan';
@@ -23,9 +22,9 @@ export enum PatientStatus {
   COMPLETED = 'completed',
 }
 
-export interface Filho {
-  nome: string;
-  idade: number;
+export interface Child {
+  name: string;
+  age: number;
 }
 
 @Entity()
@@ -48,11 +47,8 @@ export class Patient {
   })
   status: PatientStatus;
 
-  @Column({ name: 'nome_completo', nullable: true })
-  nomeCompleto?: string;
-
-  @Column({ type: 'date', name: 'data_nascimento', nullable: true })
-  dataNascimento?: Date;
+  @Column({ type: 'date', name: 'birth_date', nullable: true })
+  birthDate?: Date;
 
   @Column({ nullable: true })
   cpf?: string;
@@ -60,40 +56,35 @@ export class Patient {
   @Column({ nullable: true })
   rg?: string;
 
-  @Column({ name: 'endereco_completo', nullable: true })
-  enderecoCompleto?: string;
+  @Column({ name: 'full_address', nullable: true })
+  address?: string;
 
   @Column({ nullable: true })
-  cep?: string;
+  zipCode?: string;
 
   @Column({ nullable: true })
-  telefone?: string;
+  phone?: string;
 
-  @Column({ name: 'estado_civil', nullable: true })
-  estadoCivil?: string;
+  @Column({ name: 'marital_status', nullable: true })
+  maritalStatus?: string;
 
-  @Column({ name: 'nome_esposa', nullable: true })
-  nomeEsposa?: string;
+  @Column({ name: 'spouse_name', nullable: true })
+  spouseName?: string;
 
   @Column({ type: 'jsonb', nullable: true })
-  filhos?: Filho[];
+  children?: Child[];
 
-  @OneToMany(() => Appointment, (appointment) => appointment.paciente)
-  atendimentos: Appointment[];
+  @OneToMany(() => Appointment, (appointment) => appointment.patient)
+  appointments: Appointment[];
 
-  @OneToMany(() => Loan, (loan) => loan.paciente)
-  emprestimos: Loan[];
+  @OneToMany(() => Loan, (loan) => loan.patient)
+  loans: Loan[];
 
-  @OneToMany(() => Donation, (donation) => donation.paciente)
-  doacoes: Donation[];
+  @OneToMany(() => Donation, (donation) => donation.patient)
+  donations: Donation[];
 
-  @ManyToMany(() => Workshop, (workshop) => workshop.participantes)
-  @JoinTable({
-    name: 'paciente_oficina',
-    joinColumn: { name: 'paciente_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'oficina_id', referencedColumnName: 'id' },
-  })
-  oficinas: Workshop[];
+  @ManyToMany(() => Workshop, (workshop) => workshop.participants)
+  workshops: Workshop[];
 
   @CreateDateColumn()
   createdAt?: Date;

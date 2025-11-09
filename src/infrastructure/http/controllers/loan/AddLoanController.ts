@@ -4,20 +4,17 @@ import * as yup from 'yup';
 import { AddLoanAction } from '../../../../domain/loan/AddLoanAction';
 
 export const addLoanSchema = yup.object({
-  pacienteId: yup.number().required('ID do paciente é obrigatório'),
-  item: yup.string().required('Item é obrigatório'),
-  quantidade: yup.number().required('Quantidade é obrigatória'),
-  unidade: yup.string().required('Unidade é obrigatória'),
-  dataEmprestimo: yup.date().required('Data do empréstimo é obrigatória'),
-  dataDevolucaoPrevista: yup.date().required('Data de devolução prevista é obrigatória'),
-  declaracaoAssinada: yup.boolean().default(false),
+  patientId: yup.number().required('Patient ID is required'),
+  item: yup.string().required('Item is required'),
+  quantity: yup.number().required('Quantity is required'),
+  signedDeclaration: yup.boolean().default(false),
   loanDate: yup.date().optional(),
   returnDate: yup.date().optional(),
   patientName: yup.string().optional(),
   equipment: yup.string().optional(),
   status: yup
-    .mixed<'pending' | 'returned'>()
-    .oneOf(['pending', 'returned'], 'Status inválido')
+    .mixed<'pending' | 'returned' | 'overdue'>()
+    .oneOf(['pending', 'returned', 'overdue'], 'Invalid status')
     .optional(),
 });
 

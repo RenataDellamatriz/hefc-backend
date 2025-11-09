@@ -45,6 +45,7 @@ export class SignInController extends Controller {
     const user = await this.signInAction.execute(email, password);
     
     const accessToken = await res.jwtSign({ id: user.id, role: user.role });
+    console.log("accessToken", accessToken)
 
     return res.status(200).send(accessToken);
   }

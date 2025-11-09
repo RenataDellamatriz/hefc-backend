@@ -11,7 +11,13 @@ export class GetWorkshopAction extends Action {
       if (workshopId) {
         return await this.workshopRepository.getById(workshopId);
       }
-      return await this.workshopRepository.getAll({});
+
+      const workshops = await this.workshopRepository.getAll({
+        where: {},
+        relations: ['participants'],
+      });
+
+      return workshops;
     } catch (e) {
       throw new Error(e);
     }

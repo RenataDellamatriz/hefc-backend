@@ -4,36 +4,34 @@ import * as yup from 'yup';
 import { AddWorkshopAction } from '../../../../domain/workshop/AddWorkshopAction';
 
 export const addWorkshopSchema = yup.object({
-  name: yup.string().required('Nome da oficina é obrigatório'),
+  name: yup.string().required('Workshop name is required'),
   weekday: yup
     .string()
-    .oneOf(['monday', 'tuesday', 'wednesday', 'thursday', 'friday'], 'Dia da semana inválido')
-    .required('Dia da semana é obrigatório'),
+    .oneOf(['monday', 'tuesday', 'wednesday', 'thursday', 'friday'], 'Invalid weekday')
+    .required('Weekday is required'),
   startTime: yup
     .string()
-    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Horário de início inválido')
-    .required('Horário de início é obrigatório'),
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Invalid start time')
+    .required('Start time is required'),
   endTime: yup
     .string()
-    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Horário de fim inválido')
-    .required('Horário de fim é obrigatório')
-    .test(
-      'is-after-startTime',
-      'Horário de fim deve ser depois do horário de início',
-      function (value) {
-        const { startTime } = this.parent;
-        return value > startTime;
-      },
-    ),
-  participants: yup
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Invalid end time')
+    .required('End time is required')
+    .test('is-after-startTime', 'End time must be after start time', function (value) {
+      const { startTime } = this.parent;
+      return value > startTime;
+    }),
+  participantsCount: yup
     .number()
-    .integer('Participantes deve ser um número inteiro')
-    .min(0, 'Participantes deve ser pelo menos 0')
-    .required('Número de participantes é obrigatório'),
+    .integer('Participants must be an integer')
+    .min(0, 'Participants must be at least 0')
+    .required('Number of participants is required'),
+  participants: yup.array().required('Participants are required'),
+  description: yup.string().optional(),
   status: yup
     .string()
-    .oneOf(['active', 'inactive', 'cancelled'], 'Status inválido')
-    .required('Status é obrigatório'),
+    .oneOf(['active', 'inactive', 'cancelled'], 'Invalid status')
+    .required('Status is required'),
 });
 
 export type AddWorkshopSchema = yup.InferType<typeof addWorkshopSchema>;

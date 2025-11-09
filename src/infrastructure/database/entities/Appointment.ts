@@ -16,15 +16,12 @@ export class Appointment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'int', name: 'paciente_id', nullable: true })
-  pacienteId?: number;
+  @Column({ type: 'int', name: 'patient_id', nullable: true })
+  patientId?: number;
 
-  @ManyToOne(() => Patient, (patient) => patient.atendimentos, { nullable: true })
-  @JoinColumn({ name: 'paciente_id' })
-  paciente?: Patient;
-
-  @Column({ type: 'date', name: 'data', nullable: true })
-  data?: Date;
+  @ManyToOne(() => Patient, (patient) => patient.appointments, { nullable: true })
+  @JoinColumn({ name: 'patient_id' })
+  patient?: Patient;
 
   @Column({ type: 'timestamp', name: 'appointment_date', nullable: true })
   appointmentDate?: Date;
@@ -39,13 +36,13 @@ export class Appointment {
   status?: AppointmentStatus;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  profissional?: string;
+  professional?: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  especialidade?: string;
+  specialty?: string;
 
   @Column({ type: 'text', nullable: true })
-  observacoes?: string;
+  notes?: string;
 
   @CreateDateColumn()
   createdAt?: Date;

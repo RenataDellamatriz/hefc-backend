@@ -28,24 +28,24 @@ export class Donation {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'int', name: 'paciente_id', nullable: true })
-  pacienteId?: number;
+  @Column({ type: 'int', name: 'patient_id', nullable: true })
+  patientId?: number;
 
-  @ManyToOne(() => Patient, (patient) => patient.doacoes, { nullable: true })
-  @JoinColumn({ name: 'paciente_id' })
-  paciente?: Patient;
+  @ManyToOne(() => Patient, (patient) => patient.donations, { nullable: true })
+  @JoinColumn({ name: 'patient_id' })
+  patient?: Patient;
 
-  @Column({ type: 'varchar', length: 255, name: 'descricao_item', nullable: true })
-  descricaoItem?: string;
+  @Column({ type: 'varchar', length: 255, name: 'item_description', nullable: true })
+  itemDescription?: string;
 
   @Column({ type: 'int', nullable: true })
-  quantidade?: number;
+  quantity?: number;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  unidade?: string;
+  unit?: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, name: 'valor_estimado', nullable: true })
-  valorEstimado?: string;
+  @Column({ type: 'decimal', precision: 10, scale: 2, name: 'estimated_value', nullable: true })
+  estimatedValue?: string;
 
   @CreateDateColumn()
   createdAt?: Date;

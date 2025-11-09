@@ -17,7 +17,7 @@ export class GetAppointmentAction extends Action {
         const appointment = await this.appointmentRepository.getById(appointmentId);
         return {
           ...appointment,
-          paciente: patientName,
+          patientName,
         };
       }
       return await this.appointmentRepository.getAll({});

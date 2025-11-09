@@ -28,7 +28,7 @@ export class GetPatientReportController extends Controller {
   }
 
   async handle(req: FastifyRequest) {
-    const { query } = await this.validateInputs<null, GetPatientReportSchema, null>(req);
-    return await this.getPatientReportAction.execute(query?.patientId);
+    const { querystring } = await this.validateInputs<null, GetPatientReportSchema, null>(req);
+    return await this.getPatientReportAction.execute(querystring?.patientId);
   }
 }

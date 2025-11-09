@@ -17,7 +17,7 @@ export class GetDonationAction extends Action {
         const appointment = await this.donationRepository.getById(donationId);
         return {
           ...appointment,
-          paciente: patientName,
+          patientName,
         };
       }
       return await this.donationRepository.getAll({});
