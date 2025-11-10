@@ -4,19 +4,39 @@ import * as yup from 'yup';
 import { DonationStatus, DonationType } from '../../../database/entities/Donation';
 import { AddDonationAction } from '../../../../domain/donation/AddDonationAction';
 
+
 export const addDonationSchema = yup.object({
-  patientId: yup.number().required('Patient ID is required'),
-  itemDescription: yup.string().required('Item description is required'),
-  quantity: yup.number().required('Quantity is required'),
-  unit: yup.string().optional(),
-  estimatedValue: yup.string().optional(),
-  type: yup.mixed<DonationType>().oneOf(Object.values(DonationType)).optional(),
-  amount: yup.string().optional(),
+  // Dados do Doador
+  donorName: yup.string().required('Nome do doador é obrigatório'),
+  donorType: yup.string().oneOf(['individual', 'company']).default('individual'),
+  donorCpf: yup.string().nullable().optional(),
+  donorCnpj: yup.string().nullable().optional(),
+  donorPhone: yup.string().nullable().optional(),
+
+  // Endereço
+  donorZipCode: yup.string().nullable().optional(),
+  donorStreet: yup.string().nullable().optional(),
+  donorNumber: yup.string().nullable().optional(),
+  donorComplement: yup.string().nullable().optional(),
+  donorNeighborhood: yup.string().nullable().optional(),
+  donorCity: yup.string().nullable().optional(),
+  donorState: yup.string().nullable().optional(),
+
+  // Dados da Doação
+  patientId: yup.number().nullable().optional(),
+  itemDescription: yup.string().nullable().optional(),
+  quantity: yup.number().nullable().optional(),
+  unit: yup.string().nullable().optional(),
+  estimatedValue: yup.string().nullable().optional(),
+  type: yup
+    .mixed<DonationType>()
+    .oneOf(Object.values(DonationType), 'Tipo de doação inválido')
+    .optional(),
+  amount: yup.string().nullable().optional(),
   status: yup
     .mixed<DonationStatus>()
-    .oneOf(Object.values(DonationStatus))
-    .default(DonationStatus.PENDING)
-    .optional(),
+    .oneOf(Object.values(DonationStatus), 'Status inválido')
+    .default(DonationStatus.PENDING),
 });
 
 export type AddDonationSchema = yup.InferType<typeof addDonationSchema>;

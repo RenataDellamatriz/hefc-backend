@@ -20,7 +20,7 @@ export class GetLoanAction extends Action {
           patientName,
         };
       }
-      return await this.loanRepository.getAll({relations: ['contacts']});
+      return await this.loanRepository.getAll({});
     } catch (e) {
       throw new Error(e);
     }

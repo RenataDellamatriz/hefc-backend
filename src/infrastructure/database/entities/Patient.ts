@@ -56,12 +56,6 @@ export class Patient {
   @Column({ nullable: true })
   rg?: string;
 
-  @Column({ name: 'full_address', nullable: true })
-  address?: string;
-
-  @Column({ nullable: true })
-  zipCode?: string;
-
   @Column({ nullable: true })
   phone?: string;
 
@@ -73,6 +67,28 @@ export class Patient {
 
   @Column({ type: 'jsonb', nullable: true })
   children?: Child[];
+
+  // Endereço completo
+  @Column({ name: 'zip_code', nullable: true })
+  zipCode?: string;
+
+  @Column({ name: 'street', nullable: true })
+  street?: string;
+
+  @Column({ name: 'number', nullable: true })
+  number?: string;
+
+  @Column({ name: 'complement', nullable: true })
+  complement?: string;
+
+  @Column({ name: 'neighborhood', nullable: true })
+  neighborhood?: string;
+
+  @Column({ name: 'city', nullable: true })
+  city?: string;
+
+  @Column({ name: 'state', nullable: true })
+  state?: string;
 
   @OneToMany(() => Appointment, (appointment) => appointment.patient)
   appointments: Appointment[];
